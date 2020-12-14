@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createPost, editPost } from "../actions/postActions";
+import { removeCurrentPost } from "../actions/currentPostActions";
 
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
 import FileBase from "react-file-base64";
@@ -26,12 +27,10 @@ const AddPostForm = (props) => {
     e.preventDefault();
 
     if (currentPost) {
-      console.log(" edit ok");
       dispatch(editPost(post));
-      currentPost = null;
+      dispatch(removeCurrentPost());
       clearForm();
     } else {
-      console.log("create ok");
       dispatch(createPost(post));
       clearForm();
     }
@@ -45,7 +44,7 @@ const AddPostForm = (props) => {
       <FormGroup>
         <Label for="symbol">Symbol</Label>
         <Input
-          required="true"
+          required={true}
           type="text"
           name="symbol"
           placeholder="MSFT"
@@ -57,7 +56,7 @@ const AddPostForm = (props) => {
       <FormGroup>
         <Label for="author">Author</Label>
         <Input
-          required="true"
+          required={true}
           type="text"
           name="author"
           placeholder="trader"
@@ -69,7 +68,7 @@ const AddPostForm = (props) => {
       <FormGroup>
         <Label for="desc">Description</Label>
         <Input
-          required="true"
+          required={true}
           type="textarea"
           placeholder="short description of trade you've taken"
           name="desc"
@@ -81,8 +80,9 @@ const AddPostForm = (props) => {
         <FileBase
           typ="file"
           multiple={false}
-          onDone={({ base64 }) => setPost({ ...post, image: base64 })}
-        ></FileBase>
+          onDone={({ base64 }) =>
+            setPost({ ...post, image: base64 })
+          }></FileBase>
       </FormGroup>
 
       <Button color="primary" className="mr-2">

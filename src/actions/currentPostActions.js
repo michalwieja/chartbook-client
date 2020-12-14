@@ -3,3 +3,6 @@ export const setCurrentPost = (post) => {
 };
 
 // remove current post
+export const removeCurrentPost = () => {
+  return { type: "removeCurrentPost" };
+};

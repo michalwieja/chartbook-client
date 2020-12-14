@@ -23,12 +23,12 @@ const Example = (props) => {
           <NavbarToggler onClick={toggle} />
           <Collapse isOpen={isOpen} navbar>
             <Nav className="ml-auto" navbar>
-              <NavItem>
+              <NavItem className="mr-2">
                 <NavLink to="/" exact>
                   Charts
                 </NavLink>
               </NavItem>
-              <NavItem>
+              <NavItem className="mr-2">
                 <NavLink to="/login" exact>
                   Login
                 </NavLink>
