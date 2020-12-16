@@ -8,7 +8,7 @@ import Post from "./Post";
 const Postlist = () => {
   const dispatch = useDispatch();
   const posts = useSelector((state) => state.posts);
-  useEffect(() => dispatch(getPosts()), [dispatch, posts]);
+  useEffect(() => dispatch(getPosts()), [dispatch]);
 
   return (
     <Container>
