@@ -38,6 +38,7 @@ const AddPostForm = (props) => {
 
   const clearForm = () => {
     setPost({ symbol: "", author: "", desc: "" });
+    dispatch(removeCurrentPost());
   };
   return (
     <Form className="mb-5" onSubmit={handleForm}>
@@ -80,9 +81,8 @@ const AddPostForm = (props) => {
         <FileBase
           typ="file"
           multiple={false}
-          onDone={({ base64 }) =>
-            setPost({ ...post, image: base64 })
-          }></FileBase>
+          onDone={({ base64 }) => setPost({ ...post, image: base64 })}
+        ></FileBase>
       </FormGroup>
 
       <Button color="primary" className="mr-2">

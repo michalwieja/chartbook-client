@@ -8,7 +8,14 @@ import Postlist from "./components/Postlist";
 import Login from "./components/Login";
 import Register from "./components/Register";
 
+import { loadUser } from "./actions/userActions";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+
 function App() {
+  const dispatch = useDispatch();
+  useEffect(() => dispatch(loadUser()), []);
+
   return (
     <div className="App">
       <Header />
