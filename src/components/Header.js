@@ -9,6 +9,8 @@ import {
   NavItem,
 } from "reactstrap";
 import { NavLink } from "react-router-dom";
+import Register from "./Register";
+import Login from "./Login";
 
 const Example = (props) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -19,7 +21,7 @@ const Example = (props) => {
     <div>
       <Navbar color="primary" dark expand="md" className="mb-5">
         <Container>
-          <NavbarBrand to="/">chartbook</NavbarBrand>
+          <NavbarBrand href="/">chartbook</NavbarBrand>
           <NavbarToggler onClick={toggle} />
           <Collapse isOpen={isOpen} navbar>
             <Nav className="ml-auto" navbar>
@@ -28,16 +30,8 @@ const Example = (props) => {
                   Charts
                 </NavLink>
               </NavItem>
-              <NavItem className="mr-2">
-                <NavLink to="/login" exact>
-                  Login
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink to="/register" exact>
-                  Register
-                </NavLink>
-              </NavItem>
+              <Login />
+              <Register />
             </Nav>
           </Collapse>
         </Container>
