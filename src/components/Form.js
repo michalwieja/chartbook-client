@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createPost, editPost } from "../actions/postActions";
+import { createPost, editPost, getPosts } from "../actions/postActions";
 import { removeCurrentPost } from "../actions/currentPostActions";
 
 import {
@@ -45,6 +45,7 @@ const AddPostForm = (props) => {
       clearForm();
     }
     toggle();
+    dispatch(getPosts());
   };
 
   const clearForm = () => {
@@ -104,9 +105,8 @@ const AddPostForm = (props) => {
               <FileBase
                 typ="file"
                 multiple={false}
-                onDone={({ base64 }) =>
-                  setPost({ ...post, image: base64 })
-                }></FileBase>
+                onDone={({ base64 }) => setPost({ ...post, image: base64 })}
+              ></FileBase>
             </FormGroup>
           </ModalBody>
           <ModalFooter>

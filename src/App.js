@@ -14,7 +14,7 @@ import { useDispatch } from "react-redux";
 
 function App() {
   const dispatch = useDispatch();
-  useEffect(() => dispatch(loadUser()), []);
+  useEffect(() => dispatch(loadUser()), [dispatch]);
 
   return (
     <div className="App">

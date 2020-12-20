@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { register } from "../actions/userActions";
+import { login } from "../actions/userActions";
 import {
   Button,
   Form,
@@ -24,7 +24,7 @@ const Register = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(register(user));
+    dispatch(login(user));
   };
 
   return (
