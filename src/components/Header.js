@@ -44,7 +44,7 @@ const Example = () => {
       <Navbar color="primary" dark expand="md" className="mb-5">
         <Container>
           <Link to="/" className="navbar-text h3">
-            Chartbook
+            chartbook
           </Link>
           <NavbarToggler onClick={toggle} />
           <Collapse isOpen={isOpen} navbar>

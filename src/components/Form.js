@@ -32,6 +32,8 @@ const AddPostForm = (props) => {
     }
   }, [currentPost]);
 
+  const isAuth = useSelector((state) => state.user.isAuth);
+
   const dispatch = useDispatch();
   const handleForm = (e) => {
     e.preventDefault();
@@ -59,9 +61,11 @@ const AddPostForm = (props) => {
   const toggle = () => setModal(!modal);
   return (
     <div>
-      <Button color="primary" onClick={toggle} className="mb-2">
-        Add chart
-      </Button>
+      {isAuth && (
+        <Button color="primary" onClick={toggle} className="mb-2">
+          Add chart
+        </Button>
+      )}
       <Modal isOpen={modal} toggle={toggle}>
         <ModalHeader toggle={toggle}>Modal title</ModalHeader>
         <Form className="mb-5" onSubmit={handleForm}>

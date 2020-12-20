@@ -11,6 +11,7 @@ import Register from "./components/Register";
 import { loadUser } from "./actions/userActions";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
+import Footer from "./components/Footer";
 
 function App() {
   const dispatch = useDispatch();
@@ -24,6 +25,7 @@ function App() {
         <Route path="/login" exact component={Login}></Route>
         <Route path="/register" exact component={Register}></Route>
       </Switch>
+      <Footer />
     </div>
   );
 }
