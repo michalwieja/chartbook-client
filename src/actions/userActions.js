@@ -1,5 +1,5 @@
 import axios from "axios";
-import { returnErrors } from "./errorActions";
+import { returnErrors, clearErrors } from "./errorActions";
 
 export const loadUser = () => (dispatch, getState) => {
   dispatch({ type: "USER_LOADING" });
@@ -35,11 +35,43 @@ export const register = ({ name, email, password }) => (dispatch) => {
 
   axios
     .post("/auth/register", body, config)
-    .then((res) => dispatch({ type: "REGISTER_SUCCESS", payload: res.data }))
+    .then((res) => {
+      dispatch(clearErrors());
+      dispatch({ type: "REGISTER_SUCCESS", payload: res.data });
+    })
     .catch((err) => {
       dispatch(
         returnErrors(err.response.data, err.response.status, "REGISTER_FAIL")
       );
       dispatch({ type: "REGISTER_FAIL" });
     });
+};
+
+export const login = ({ email, password }) => (dispatch) => {
+  const config = {
+    headers: {
+      "Content-type": "application/json",
+    },
+  };
+
+  const body = JSON.stringify({ email, password });
+
+  axios
+    .post("/auth/login", body, config)
+    .then((res) => {
+      dispatch(clearErrors());
+      dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
+    })
+    .catch((err) => {
+      dispatch(
+        returnErrors(err.response.data, err.response.status, "LOGIN_FAIL")
+      );
+      dispatch({ type: "LOGIN_FAIL" });
+    });
+};
+
+export const logout = () => {
+  return {
+    type: "LOGOUT_SUCCESS",
+  };
 };

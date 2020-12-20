@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { register } from "../actions/userActions";
+import { clearErrors } from "../actions/errorActions";
 import {
   Button,
   Form,
@@ -13,18 +14,30 @@ import {
   ModalFooter,
   NavItem,
   NavLink,
+  Alert,
 } from "reactstrap";
 const Register = () => {
   const [modal, setModal] = useState(false);
   const [user, setUser] = useState({ name: "", email: "", password: "" });
+  const { msg } = useSelector((state) => state.error.msg);
+  const isAuth = useSelector((state) => state.user.isAuth);
 
-  const toggle = () => setModal(!modal);
+  const toggle = () => {
+    dispatch(clearErrors());
+    setModal(!modal);
+  };
 
   const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(register(user));
+
+    if (modal) {
+      if (isAuth) {
+        setModal(false);
+      }
+    }
   };
 
   return (
@@ -36,6 +49,7 @@ const Register = () => {
       <Modal isOpen={modal} toggle={toggle}>
         <Form onSubmit={handleSubmit}>
           <ModalHeader toggle={toggle}>Please register</ModalHeader>
+          {msg && <Alert color="danger">{msg}</Alert>}
           <ModalBody>
             <FormGroup>
               <Label for="exampleEmail">Trader</Label>

@@ -9,12 +9,15 @@ import {
   CardSubtitle,
 } from "reactstrap";
 import { FaTrash, FaPen } from "react-icons/fa";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { deletePost } from "../actions/postActions";
 import { setCurrentPost } from "../actions/currentPostActions";
 
 const Post = ({ post }) => {
   const dispatch = useDispatch();
+
+  const isAuth = useSelector((state) => state.user.isAuth);
+  const user = useSelector((state) => state.user.userrs);
 
   return (
     <Card className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
@@ -31,21 +34,23 @@ const Post = ({ post }) => {
           {post.author}
         </CardSubtitle>
         <CardText>{post.desc}</CardText>
-        <Button
-          outline
-          color="danger"
-          onClick={() => dispatch(deletePost(post._id))}
-          className="mr-2 "
-        >
-          <FaTrash />
-        </Button>
-        <Button
+        {isAuth && (
+          <Button
+            outline
+            color="danger"
+            onClick={() => dispatch(deletePost(post._id))}
+            className="mr-2 "
+          >
+            <FaTrash />
+          </Button>
+        )}
+        {/* <Button
           outline
           color="primary"
           onClick={() => dispatch(setCurrentPost(post))}
         >
           <FaPen />
-        </Button>
+        </Button> */}
       </CardBody>
     </Card>
   );

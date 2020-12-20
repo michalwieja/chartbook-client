@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createPost, editPost } from "../actions/postActions";
+import { createPost, editPost, getPosts } from "../actions/postActions";
 import { removeCurrentPost } from "../actions/currentPostActions";
 
 import {
@@ -24,7 +24,10 @@ const AddPostForm = (props) => {
     desc: "",
     image: "",
   });
-
+  const user = useSelector((state) => state.user.user);
+  if (user) {
+    setPost({ ...post, author: user.name });
+  }
   let currentPost = useSelector((state) => state.currentPost);
   useEffect(() => {
     if (currentPost) {
@@ -45,6 +48,7 @@ const AddPostForm = (props) => {
       clearForm();
     }
     toggle();
+    dispatch(getPosts());
   };
 
   const clearForm = () => {
@@ -56,11 +60,15 @@ const AddPostForm = (props) => {
   const [modal, setModal] = useState(false);
 
   const toggle = () => setModal(!modal);
+
+  const isAuth = useSelector((state) => state.user.isAuth);
   return (
     <div>
-      <Button color="primary" onClick={toggle} className="mb-2">
-        Add chart
-      </Button>
+      {isAuth && (
+        <Button color="primary" onClick={toggle} className="mb-2">
+          Add chart
+        </Button>
+      )}
       <Modal isOpen={modal} toggle={toggle}>
         <ModalHeader toggle={toggle}>Modal title</ModalHeader>
         <Form className="mb-5" onSubmit={handleForm}>
@@ -76,7 +84,7 @@ const AddPostForm = (props) => {
                 onChange={(e) => setPost({ ...post, symbol: e.target.value })}
               />
             </FormGroup>
-
+            {/* 
             <FormGroup>
               <Label for="author">Author</Label>
               <Input
@@ -84,10 +92,10 @@ const AddPostForm = (props) => {
                 type="text"
                 name="author"
                 placeholder="trader"
-                value={post.author}
+                value={user ? user.name : post.author}
                 onChange={(e) => setPost({ ...post, author: e.target.value })}
               />
-            </FormGroup>
+            </FormGroup> */}
 
             <FormGroup>
               <Label for="desc">Description</Label>
@@ -104,9 +112,8 @@ const AddPostForm = (props) => {
               <FileBase
                 typ="file"
                 multiple={false}
-                onDone={({ base64 }) =>
-                  setPost({ ...post, image: base64 })
-                }></FileBase>
+                onDone={({ base64 }) => setPost({ ...post, image: base64 })}
+              ></FileBase>
             </FormGroup>
           </ModalBody>
           <ModalFooter>
