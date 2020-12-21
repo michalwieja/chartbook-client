@@ -4,19 +4,8 @@ import { returnErrors } from "./errorActions";
 export const loadUser = () => (dispatch, getState) => {
   dispatch({ type: "USER_LOADING" });
 
-  const token = getState().user.token;
-  const config = {
-    headers: {
-      "Content-type": "application/json",
-    },
-  };
-
-  if (token) {
-    config.headers["auth-token"] = token;
-  }
-
   axios
-    .get("/auth/user", config)
+    .get("/auth/user", tokenConfig(getState))
     .then((res) => dispatch({ type: "USER_LOADED", payload: res.data }))
     .catch((err) => {
       dispatch(returnErrors(err.response.data, err.response.status));
@@ -62,4 +51,18 @@ export const login = ({ email, password }) => (dispatch) => {
       );
       dispatch({ type: "LOGIN_FAIL" });
     });
+};
+
+export const tokenConfig = (getState) => {
+  const token = getState().user.token;
+  const config = {
+    headers: {
+      "Content-type": "application/json",
+    },
+  };
+
+  if (token) {
+    config.headers["auth-token"] = token;
+  }
+  return config;
 };

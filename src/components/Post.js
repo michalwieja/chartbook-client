@@ -8,6 +8,7 @@ import {
   CardTitle,
   CardSubtitle,
 } from "reactstrap";
+import ImageComponent from "./ImageComponent";
 import { FaTrash, FaPen } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { deletePost } from "../actions/postActions";
@@ -20,6 +21,7 @@ const Post = ({ post }) => {
 
   return (
     <Card className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+      {/* <ImageComponent post={post} /> */}
       <CardImg
         className="rounded"
         top
